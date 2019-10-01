@@ -101,14 +101,13 @@ JOIN Members
 ON Bookings.memid =  Members.memid
 AND starttime LIKE '2012-09-14%'
 /* GROUP BY membername, Facilities.name */
-AND (Bookings.memid = 0)*slots*guestcost + (Bookings.memid != 0)*slots*membercost >= 30
+HAVING cost >= 30
 ORDER BY cost DESC
 
 /* Q9: This time, produce the same result as in Q8, but using a subquery. */
 
 SELECT * 
 FROM (
-
 SELECT Facilities.name, CONCAT(firstname, ' ', surname) AS member_name,  
 CASE WHEN Bookings.memid != 0 THEN (slots*membercost)
             ELSE (slots*guestcost) END AS cost
